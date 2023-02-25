@@ -1,0 +1,32 @@
+.postItem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto 20px auto;
+    border: 1px solid olivedrab;
+    padding: 20px;
+    font-size: 18px;
+}
+
+.postItem .postItemTheme {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.postItem .postItemTop {
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+}
+
+.postItem .postItemPosition {
+    margin-right: 10px;
+}
+
+.postItem .postItemBottom {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+}

@@ -1,0 +1,8 @@
+.customButton {
+    padding: 20px 100px;
+    font-size: 20px;
+    border: 1px solid olivedrab;
+    cursor: pointer;
+    background: white;
+    margin-bottom: 20px;
+}
