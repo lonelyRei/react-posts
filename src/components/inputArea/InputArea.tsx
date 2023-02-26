@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { CustomInput } from '../UI/input/CustomInput'
 import { CustomButton } from '../UI/button/CustomButton'
 import './inputArea.css'
-import { IPostsListItem, PostsThemes } from '../../types'
+import { IPostsListItem, postOptions, PostsThemes } from '../../types'
+import { CustomDropDown } from '../UI/dropDown/CustomDropDown'
 
 export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => {
     const [post, setPost] = useState<IPostsListItem>({
@@ -14,7 +15,7 @@ export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => 
 
     const createPost = (): void => {
         props.createNewPost(post)
-        setPost({ title: '', content: '', theme: PostsThemes.other, id: Date.now() })
+        setPost({ title: '', content: '', theme: post.theme, id: Date.now() })
     }
 
     return (
@@ -34,6 +35,14 @@ export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => 
                 placeholder="Содержание"
             />
             <CustomButton isDisabled={false} placeholder="Создать пост" onSubmit={createPost} />
+            <CustomDropDown
+                value={post.theme}
+                defaultValue={'Выбрать тему'}
+                onChange={(theme: string) => {
+                    setPost({ ...post, theme: theme })
+                }}
+                options={postOptions}
+            />
         </div>
     )
 }
