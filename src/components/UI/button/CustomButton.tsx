@@ -14,7 +14,7 @@ export const CustomButton: React.FC<ICustomButtonProps> = (props: ICustomButtonP
 }
 
 interface ICustomButtonProps {
-    placeholder: string
-    onSubmit?: () => void
-    isDisabled?: boolean
+    placeholder: string // Текст, помещаемый внутрь кнопки
+    onSubmit?: () => void // Callback, вызываемый при клике на кнопку
+    isDisabled?: boolean // Нужно ли отключить возможность клика по кнопке
 }

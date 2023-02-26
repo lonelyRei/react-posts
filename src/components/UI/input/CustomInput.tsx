@@ -16,7 +16,7 @@ export const CustomInput: React.FC<ICustomInputProps> = (props: ICustomInputProp
 }
 
 interface ICustomInputProps {
-    value: string
-    onChange: (value: string) => void
-    placeholder: string
+    value: string // Строка для двустороннего связывания
+    onChange: (value: string) => void // Callback для двустороннего связывания
+    placeholder: string // Placeholder для строки ввода
 }

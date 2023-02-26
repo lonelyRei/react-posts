@@ -4,3 +4,8 @@
     font-size: 30px;
     margin-bottom: 20px;
 }
+
+.postList .postsArea {
+    border: 3px dotted olivedrab;
+    padding: 10px;
+}

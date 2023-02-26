@@ -26,10 +26,10 @@ export const CustomDropDown: React.FC<ICustomDropDownProps> = (props: ICustomDro
 }
 
 interface ICustomDropDownProps {
-    value: string
-    onChange: (value: string) => void
+    value: string // Выбранное значение (двустороннее связывание)
+    onChange: (value: string) => void // Callback для двустороннего связывания
 
-    defaultValue: string
+    defaultValue: string // Значение по умолчанию (находится первым в выпадающем списке (disabled))
 
-    options: ICustomDropDownOption[]
+    options: ICustomDropDownOption[] // Список опция для выпадающего списка
 }

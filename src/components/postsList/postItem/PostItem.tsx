@@ -20,6 +20,6 @@ export const PostItem: React.FC<IPostItemProps> = (props: IPostItemProps): JSX.E
 }
 
 interface IPostItemProps extends IPostsListItem {
-    position: number
-    removePost: (id: number) => void
+    position: number // Порядковый номер поста для корректного отображения в списке (начиная с единицы)
+    removePost: (id: number) => void // Callback удаления поста
 }

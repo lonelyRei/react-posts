@@ -1,3 +1,4 @@
+// Темы постов
 export enum PostsThemes {
     programming = 'Программирование',
     sport = 'Спорт',
@@ -5,11 +6,13 @@ export enum PostsThemes {
     other = 'Другое',
 }
 
+// Интерфейс опций для выпадающего списка
 export interface ICustomDropDownOption {
-    value: string
-    name: string
+    value: string // Значение
+    name: string // Название
 }
 
+// Опции для выпадающего списка
 export const postOptions: ICustomDropDownOption[] = [
     {
         value: PostsThemes.other,
@@ -29,13 +32,15 @@ export const postOptions: ICustomDropDownOption[] = [
     },
 ]
 
+// Интерфейс, описывающий пост
 export interface IPostsListItem {
-    title: string
-    content: string
-    theme: string
-    id: number
+    title: string // Заголовок
+    content: string // Основная часть (контект)
+    theme: string // Тема
+    id: number // Идентификатор
 }
 
+// Специальное значение опции выпадающего списка для отображения всех постов
 export const PostThemeAny: ICustomDropDownOption = {
     name: 'Все',
     value: 'any',
