@@ -3,4 +3,11 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: 3px dotted olivedrab;
+    padding: 15px;
+    margin-bottom: 25px;
+}
+
+.inputArea .title {
+    margin-bottom: 10px;
 }

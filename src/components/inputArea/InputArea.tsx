@@ -20,6 +20,15 @@ export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => 
 
     return (
         <div className="inputArea">
+            <h2 className="title">Создание поста:</h2>
+            <CustomDropDown
+                value={post.theme}
+                defaultValue={'Выбрать тему'}
+                onChange={(theme: string) => {
+                    setPost({ ...post, theme: theme })
+                }}
+                options={postOptions}
+            />
             <CustomInput
                 value={post.title}
                 onChange={(value: string): void => {
@@ -34,15 +43,8 @@ export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => 
                 }}
                 placeholder="Содержание"
             />
+
             <CustomButton isDisabled={false} placeholder="Создать пост" onSubmit={createPost} />
-            <CustomDropDown
-                value={post.theme}
-                defaultValue={'Выбрать тему'}
-                onChange={(theme: string) => {
-                    setPost({ ...post, theme: theme })
-                }}
-                options={postOptions}
-            />
         </div>
     )
 }

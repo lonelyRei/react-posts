@@ -1,11 +1,13 @@
-import React, { useState } from 'react'
-import { IPostsListItem } from '../../types'
+import React, { useMemo, useState } from 'react'
+import { IPostsListItem, PostThemeAny } from '../../types'
 import { InputArea } from '../inputArea/InputArea'
 import './postsList.css'
-import { PostItem } from './postItem/PostItem'
+import { PostsWrapper } from './postsWrapper/PostsWrapper'
 
 export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
     const [posts, setPosts] = useState<IPostsListItem[]>([])
+
+    const [selectedTheme, setSelectedTheme] = useState<string>('')
     const createNewPost = (post: IPostsListItem): void => {
         setPosts([...posts, post])
     }
@@ -18,25 +20,25 @@ export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
         )
     }
 
+    const filteredPosts = useMemo(() => {
+        if (selectedTheme === PostThemeAny.value) {
+            return posts
+        } else {
+            return posts.filter((post) => post.theme.includes(selectedTheme))
+        }
+    }, [selectedTheme, posts])
+
     return (
-        <div>
+        <div className="postList">
             <h1 className="postsListTitle">Список постов</h1>
             <InputArea createNewPost={createNewPost} />
-            <div className="postsWrapper">
-                {posts.map((post: IPostsListItem, index: number): JSX.Element => {
-                    return (
-                        <PostItem
-                            title={post.title}
-                            position={index + 1}
-                            content={post.content}
-                            theme={post.theme}
-                            id={post.id}
-                            key={Date.now() + index}
-                            removePost={removePost}
-                        />
-                    )
-                })}
-            </div>
+            <PostsWrapper
+                filteredPosts={filteredPosts}
+                removePost={removePost}
+                posts={posts}
+                setSelectedTheme={setSelectedTheme}
+                selectedTheme={selectedTheme}
+            />
         </div>
     )
 }

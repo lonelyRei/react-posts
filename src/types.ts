@@ -35,3 +35,8 @@ export interface IPostsListItem {
     theme: string
     id: number
 }
+
+export const PostThemeAny: ICustomDropDownOption = {
+    name: 'Все',
+    value: 'any',
+}

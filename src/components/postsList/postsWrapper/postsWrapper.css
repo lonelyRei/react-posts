@@ -1,0 +1,9 @@
+.postsWrapper {
+    padding: 20px;
+    border: 3px dotted olivedrab;
+    min-height: 200px;
+}
+
+.postListEmpty {
+    text-align: center;
+}
