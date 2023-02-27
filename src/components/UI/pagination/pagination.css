@@ -1,0 +1,25 @@
+.postPagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin: 20px auto;
+    width: 100%;
+    height: 50px;
+}
+
+.postPagination .postPag {
+    width: 30px;
+    height: 30px;
+    border: 1px solid olivedrab;
+    padding: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.postPagination .postPagCurrent {
+    background: wheat;
+}

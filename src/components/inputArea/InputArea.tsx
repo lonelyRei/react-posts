@@ -13,8 +13,11 @@ export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => 
         id: Date.now(),
     })
 
+    // Создание поста
     const createPost = (): void => {
+        // Вызываем callback
         props.createNewPost(post)
+        // Обнуляем состояние
         setPost({ title: '', content: '', theme: post.theme, id: Date.now() })
     }
 

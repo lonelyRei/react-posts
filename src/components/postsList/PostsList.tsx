@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { IPostsListItem, PostThemeAny } from '../../types'
 import { InputArea } from '../inputArea/InputArea'
 import './postsList.css'
@@ -8,10 +8,26 @@ import { useSortedPostsWithQuery } from '../../hooks/usePosts'
 import { useFetching } from '../../hooks/useFetching'
 import PostService from '../../API/PostService'
 import { Spinner } from '../UI/spinner/Spinner'
+import { getPagesArray, getPagesCount } from '../../utils/pages'
+import { Pagination } from '../UI/pagination/Pagination'
 
 export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
     // Все посты, созданные пользователем
     const [posts, setPosts] = useState<IPostsListItem[]>([])
+
+    // Состояние количества страниц, доступных для отрисовки
+    const [totalPages, setTotalPages] = useState<number>(0)
+
+    // Состояния лимита постов на страницы и номера страницы
+    const limit: number = 10
+
+    // Текущая страница
+    const [page, setPage] = useState<number>(1)
+
+    // Массив постов для пагинации
+    const pagesArray = useMemo(() => {
+        return getPagesArray(totalPages)
+    }, [totalPages])
 
     // Выбранный алгоритм сортироваки постов:
     // query - Строка поиска по заголовку или контенту
@@ -39,15 +55,17 @@ export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
     const filteredPostsWithQuery = useSortedPostsWithQuery(filterAlgorithm.query, filterAlgorithm.selectedTheme, posts)
 
     const [callback, isLoading, error] = useFetching(async () => {
-        const posts = await PostService.getAllPosts()
+        const [posts, totalCount] = await PostService.getAllPosts(limit, page)
         setPosts(posts)
+        setTotalPages(getPagesCount(totalCount, limit))
     })
 
     useEffect((): void => {
         // @ts-ignore
         callback().then()
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [])
+    }, [page])
 
     return (
         <div className="postList">
@@ -56,7 +74,7 @@ export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
             ) : error ? (
                 <h1>Не удалось загрузить посты</h1>
             ) : (
-                <>
+                <div>
                     <h1 className="postsListTitle">Список постов</h1>
                     <InputArea createNewPost={createNewPost} />
                     <div className="postsArea">
@@ -69,8 +87,9 @@ export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
                             setQuery={(value: string) => setFilterAlgorithm({ ...filterAlgorithm, query: value })}
                         />
                         <PostsWrapper filteredPosts={filteredPostsWithQuery} removePost={removePost} />
+                        <Pagination currentPage={page} pagesArray={pagesArray} setPage={setPage} />
                     </div>
-                </>
+                </div>
             )}
         </div>
     )
