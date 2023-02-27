@@ -1,9 +1,10 @@
-import React, { useMemo, useState } from 'react'
+import React, { useState } from 'react'
 import { IPostsListItem, PostThemeAny } from '../../types'
 import { InputArea } from '../inputArea/InputArea'
 import './postsList.css'
 import { PostsWrapper } from './postsWrapper/PostsWrapper'
 import { FilterPosts } from './filterPosts/FilterPosts'
+import { useSortedPostsWithQuery } from '../../hooks/usePosts'
 
 export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
     // Все посты, созданные пользователем
@@ -31,27 +32,8 @@ export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
         )
     }
 
-    // Посты, отфильтрованные по теме
-    // Если выбрана тема any, то отображает все посты, созданные юзером, иначе только посты, попадающие под категорию
-    // В массив зависимостей передается выбранная тема и список всех постов
-    const filteredPosts = useMemo(() => {
-        if (filterAlgorithm.selectedTheme === PostThemeAny.value) {
-            return posts
-        } else {
-            return posts.filter((post) => post.theme === filterAlgorithm.selectedTheme)
-        }
-    }, [filterAlgorithm.selectedTheme, posts])
-
-    // Посты, отфильтрованные по категориям + с учетом строки поиска по заголовку и контенту
-    // В массив зависимостей передается строка поиска и массив отфильтрованных по темам постов
-    const filteredPostsWithQuery = useMemo(() => {
-        return filteredPosts.filter((post: IPostsListItem): boolean => {
-            return (
-                post.content.toLowerCase().includes(filterAlgorithm.query.toLowerCase()) ||
-                post.title.toLowerCase().includes(filterAlgorithm.query.toLowerCase())
-            )
-        })
-    }, [filteredPosts, filterAlgorithm.query])
+    // Посты, отфильтрованные в соответствии с выбранной темой и поисковым запросом
+    const filteredPostsWithQuery = useSortedPostsWithQuery(filterAlgorithm.query, filterAlgorithm.selectedTheme, posts)
 
     return (
         <div className="postList">
