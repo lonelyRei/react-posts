@@ -1,5 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
-import { ICommentItem, IPostsListItem, PostsThemes } from '../types'
+import { ICommentItem, IPostsListItem } from '../types'
+import { generateRandomTheme } from '../utils/themes'
 export default class PostService {
     // URL для получения всех постов
     private static postsUrl: string = 'https://jsonplaceholder.typicode.com/posts'
@@ -42,7 +43,8 @@ export default class PostService {
                     // Наполняем список корректными постами
                     data.forEach((post: postsResponse) => {
                         // Формируем корректный пост и пушим его в массив
-                        correctData.push(this.getCorrectPost(post, PostsThemes.other))
+                        // тему генерируем случайно (в теле ответа ее нет)
+                        correctData.push(this.getCorrectPost(post, generateRandomTheme()))
                     })
                     // Возвращаем массив корректных постом и количество постов, доступных для отрисовки
                     return [correctData, Number(response.headers['x-total-count'])]
@@ -60,8 +62,8 @@ export default class PostService {
             (response: AxiosResponse<any>) => {
                 // Вытаскивает данные
                 const data: postsResponse = response.data
-                // Формируем корректный пост, тему задаем хардкодом (на сервере нет такого поля)
-                return this.getCorrectPost(data, PostsThemes.other)
+                // Формируем корректный пост, тему генерируем случайно (в теле ответа ее нет)
+                return this.getCorrectPost(data, generateRandomTheme())
             },
             (e: any) => {
                 // Выкидываем ошибку, если что-то пошло не так

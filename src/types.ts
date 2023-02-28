@@ -6,6 +6,13 @@ export enum PostsThemes {
     other = 'Другое',
 }
 
+export const postsThemesArray: PostsThemes[] = [
+    PostsThemes.programming,
+    PostsThemes.sport,
+    PostsThemes.news,
+    PostsThemes.other,
+]
+
 // Интерфейс опций для выпадающего списка
 export interface ICustomDropDownOption {
     value: string // Значение

@@ -1,18 +1,18 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import './navBar.css'
+import { IRoute, navigationPaths } from '../routing/routePaths'
 
-export const NavBar: React.FC<INavBarProps> = (props: INavBarProps): JSX.Element => {
+export const NavBar: React.FC = (): JSX.Element => {
     return (
         <div className="nav-bar">
-            <Link className="nav-bar__link" to="/">
-                Стартовая
-            </Link>
-            <Link className="nav-bar__link" to="/posts">
-                Посты
-            </Link>
+            {navigationPaths.map((path: IRoute): JSX.Element => {
+                return (
+                    <Link className="nav-bar__link" to={path.path} key={path.path}>
+                        {path.name}
+                    </Link>
+                )
+            })}
         </div>
     )
 }
-
-interface INavBarProps {}

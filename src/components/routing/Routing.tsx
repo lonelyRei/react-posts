@@ -1,14 +1,13 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import { PostsList } from '../postsList/PostsList'
-import { PostAbout } from '../postsList/postAbout/PostAbout'
+import { IRoute, routePaths } from './routePaths'
 
 export const Routing: React.FC = (): JSX.Element => {
     return (
         <Routes>
-            <Route path="/" element={<div>Стартовая</div>} />
-            <Route path="/posts" element={<PostsList />} />
-            <Route path="/posts/:id" element={<PostAbout />} />
+            {routePaths.map((route: IRoute): JSX.Element => {
+                return <Route key={route.path} path={route.path} element={route.component} />
+            })}
             <Route path="*" element={<div>Page not found :(</div>} />
         </Routes>
     )

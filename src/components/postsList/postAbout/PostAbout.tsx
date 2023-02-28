@@ -33,6 +33,8 @@ export const PostAbout: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    // ToDo: Декомпозиция компонента PostAbout
+
     return (
         <div className="post-about">
             {isLoading ? (
@@ -55,7 +57,7 @@ export const PostAbout: React.FC = () => {
                             <>
                                 <CommentsList postId={params.id ? params.id : '0'} />
                                 <CustomButton
-                                    placeholder="Убрать комментарии"
+                                    placeholder="Скрыть комментарии"
                                     onSubmit={() => {
                                         setIsNeedComments(false)
                                     }}
