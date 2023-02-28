@@ -1,12 +1,18 @@
 import React from 'react'
 import './App.css'
-import { PostsList } from './components/postsList/PostsList'
-// import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import { BrowserRouter } from 'react-router-dom'
+import { NavBar } from './components/navBar/navBar'
+import { Routing } from './components/routing/Routing'
+
+// ToDo: Сделать роутинг
 
 function App() {
     return (
         <div className="App">
-            <PostsList />
+            <BrowserRouter>
+                <NavBar />
+                <Routing />
+            </BrowserRouter>
         </div>
     )
 }
