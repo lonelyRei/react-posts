@@ -40,6 +40,14 @@ export interface IPostsListItem {
     id: number // Идентификатор
 }
 
+// Интерфейс, описывающий комментарий
+export interface ICommentItem {
+    id: number // Идентификатор комментария
+    name: string // Имя пользователя
+
+    body: string // Тело комментария
+}
+
 // Специальное значение опции выпадающего списка для отображения всех постов
 export const PostThemeAny: ICustomDropDownOption = {
     name: 'Все',

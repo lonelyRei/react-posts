@@ -48,3 +48,19 @@
 .post-about .post-about__content-text {
     text-align: center;
 }
+
+.post-about .post-about__comments-area {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 10px;
+}
+
+.post-about .comments {
+    margin-bottom: 10px;
+}
+
+.post-about .customButton {
+    width: 60%;
+    margin: 0 auto;
+}

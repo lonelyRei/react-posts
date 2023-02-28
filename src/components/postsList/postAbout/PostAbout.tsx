@@ -5,15 +5,20 @@ import PostService from '../../../API/PostService'
 import { IPostsListItem } from '../../../types'
 import { Spinner } from '../../UI/spinner/Spinner'
 import './postAbout.css'
+import { CommentsList } from '../commentsList/CommentsList'
+import { CustomButton } from '../../UI/button/CustomButton'
 export const PostAbout: React.FC = () => {
     // Состояние с постом
     const [post, setPost] = useState<IPostsListItem>({ content: '', id: 0, theme: '', title: '' })
+
+    // Состояние необходимости добавления комментариев
+    const [isNeedComments, setIsNeedComments] = useState<boolean>(false)
 
     // Забираем параметры
     const params = useParams()
 
     // Получаем пост по id из параметров
-    const [callback, isLoading, isError] = useFetching(async () => {
+    const [postsCallback, isLoading, isError] = useFetching(async () => {
         if (params.id) {
             const post = await PostService.getPost(params.id)
             setPost(post)
@@ -23,7 +28,7 @@ export const PostAbout: React.FC = () => {
     // Вызываем функцию для получения поста только один раз (при рендере компонента)
     useEffect(() => {
         // @ts-ignore
-        callback().then()
+        postsCallback().then()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -44,6 +49,26 @@ export const PostAbout: React.FC = () => {
                     <div className="post-about--content">
                         <span className="post-about__content-title">Содержание:</span>
                         <div className="post-about__content-text">{post.content}</div>
+                    </div>
+                    <div className="post-about__comments-area">
+                        {isNeedComments ? (
+                            <>
+                                <CommentsList postId={params.id ? params.id : '0'} />
+                                <CustomButton
+                                    placeholder="Убрать комментарии"
+                                    onSubmit={() => {
+                                        setIsNeedComments(false)
+                                    }}
+                                />
+                            </>
+                        ) : (
+                            <CustomButton
+                                placeholder="Загрузить комментарии"
+                                onSubmit={() => {
+                                    setIsNeedComments(true)
+                                }}
+                            />
+                        )}
                     </div>
                 </div>
             )}

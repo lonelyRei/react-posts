@@ -1,8 +1,9 @@
 import axios, { AxiosResponse } from 'axios'
-import { IPostsListItem, PostsThemes } from '../types'
+import { ICommentItem, IPostsListItem, PostsThemes } from '../types'
 export default class PostService {
     // URL для получения всех постов
     private static postsUrl: string = 'https://jsonplaceholder.typicode.com/posts'
+    private static commentsUrl: string = 'https://jsonplaceholder.typicode.com/comments'
 
     // Преобразует пост из ответа с сервера (имеет неверный формат) в пост типа IPostsListItem
     private static getCorrectPost(post: postsResponse, theme: string): IPostsListItem {
@@ -11,6 +12,15 @@ export default class PostService {
             content: post.body,
             theme: theme,
             id: post.id,
+        }
+    }
+
+    // Преобразует комментарий из ответа с сервера в комментарий типа ICommentItem
+    private static getCorrectComment(comment: commentsResponse): ICommentItem {
+        return {
+            name: comment.name,
+            id: comment.id,
+            body: comment.body,
         }
     }
 
@@ -59,12 +69,45 @@ export default class PostService {
             }
         )
     }
+
+    // Возращает список комментариев, соответствующих id поста
+    public static getCommentsById(postId: string) {
+        return axios
+            .get(PostService.commentsUrl, {
+                params: {
+                    postId: postId,
+                },
+            })
+            .then(
+                (response: AxiosResponse<any>) => {
+                    const data: commentsResponse[] = response.data
+                    const result: ICommentItem[] = []
+                    data.forEach((comment: commentsResponse): void => {
+                        result.push(this.getCorrectComment(comment))
+                    })
+                    return result
+                },
+                (e: any) => {
+                    // Выкидываем ошибку, если что-то пошло не так
+                    throw new Error(e.message)
+                }
+            )
+    }
 }
 
-// Интерфейс данных, приходящих в качестве ответа от сервера
+// Интерфейс полезной нагрузки, приходящей в теле ответа при запросе списка постов
 interface postsResponse {
-    userId: number
-    id: number
-    title: string
-    body: string
+    userId: number // Идентификатор пользователя
+    id: number // Идентификатор поста
+    title: string // Заголовок поста
+    body: string // тело поста
+}
+
+// Интерфейс полезной нагрузки, приходящей в теле ответа при запросе комментариев
+interface commentsResponse {
+    id: number // Идентификатор комментария
+    postId: number // Идентификатор поста, к которому написан комментарий
+    name: string // Имя пользователя
+    email: string // Email пользователя
+    body: string // Тело комментария
 }
