@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
-import { CustomInput } from '../UI/input/CustomInput'
-import { CustomButton } from '../UI/button/CustomButton'
+import { CustomInput } from '../../UI/input/CustomInput'
+import { CustomButton } from '../../UI/button/CustomButton'
 import './inputArea.css'
-import { IPostsListItem, postOptions, PostsThemes } from '../../types'
-import { CustomDropDown } from '../UI/dropDown/CustomDropDown'
+import { IPostsListItem, postOptions, PostsThemes } from '../../../types'
+import { CustomDropDown } from '../../UI/dropDown/CustomDropDown'
 
 export const InputArea: React.FC<IInputAreaProps> = (props: IInputAreaProps) => {
     const [post, setPost] = useState<IPostsListItem>({

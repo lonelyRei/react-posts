@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { IPostsListItem, PostThemeAny } from '../../types'
-import { InputArea } from '../inputArea/InputArea'
+import { InputArea } from './inputArea/InputArea'
 import './postsList.css'
 import { PostsWrapper } from './postsWrapper/PostsWrapper'
 import { FilterPosts } from './filterPosts/FilterPosts'
@@ -11,7 +11,7 @@ import { Spinner } from '../UI/spinner/Spinner'
 import { getPagesArray, getPagesCount } from '../../utils/pages'
 import { Pagination } from '../UI/pagination/Pagination'
 
-export const PostsList: React.FC<{}> = (props: {}): JSX.Element => {
+export const PostsList: React.FC = (): JSX.Element => {
     // Все посты, созданные пользователем
     const [posts, setPosts] = useState<IPostsListItem[]>([])
 

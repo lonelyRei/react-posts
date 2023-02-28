@@ -30,4 +30,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
+}
+
+.postItem .postItemOptions {
+    margin-top: 20px;
+    width: 30%;
+    display: flex;
+    justify-content: space-between;
 }

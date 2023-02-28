@@ -1,0 +1,50 @@
+.post-about {
+    max-width: 100%;
+    padding: 30px;
+    border: 1px solid olivedrab;
+    min-height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.post-about .post-about__outer {
+    min-height: 75%;
+    border: 1px solid olivedrab;
+}
+
+.post-about .post-about__header, .post-about .post-about--content {
+    font-size: 16px;
+}
+
+.post-about .post-about__theme,
+.post-about .post-about__content-title {
+    font-size: 18px;
+}
+
+.post-about .post-about__header {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+}
+.post-about .post-about__theme {
+    margin-bottom: 20px;
+}
+
+.post-about .post-about--content {
+    padding: 25px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.post-about .post-about__content-title {
+    margin-bottom: 20px;
+    display: block;
+}
+
+.post-about .post-about__content-text {
+    text-align: center;
+}

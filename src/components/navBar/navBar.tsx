@@ -11,9 +11,6 @@ export const NavBar: React.FC<INavBarProps> = (props: INavBarProps): JSX.Element
             <Link className="nav-bar__link" to="/posts">
                 Посты
             </Link>
-            <Link className="nav-bar__link" to="/about">
-                О проект
-            </Link>
         </div>
     )
 }

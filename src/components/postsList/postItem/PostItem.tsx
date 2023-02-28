@@ -2,8 +2,10 @@ import React from 'react'
 import { IPostsListItem } from '../../../types'
 import './postItem.css'
 import { CustomButton } from '../../UI/button/CustomButton'
+import { NavigateFunction, useNavigate } from 'react-router-dom'
 
 export const PostItem: React.FC<IPostItemProps> = (props: IPostItemProps): JSX.Element => {
+    const navigate: NavigateFunction = useNavigate()
     return (
         <div className="postItem">
             <span className="postItemTheme">Тема: {props.theme}</span> <br />
@@ -13,7 +15,10 @@ export const PostItem: React.FC<IPostItemProps> = (props: IPostItemProps): JSX.E
             </div>
             <div className="postItemBottom">
                 <p className="postItemContent">{props.content}</p>
-                <CustomButton placeholder="Удалить" onSubmit={(): void => props.removePost(props.id)} />
+                <div className="postItemOptions">
+                    <CustomButton placeholder="Открыть" onSubmit={(): void => navigate(`/posts/${props.id}`)} />
+                    <CustomButton placeholder="Удалить" onSubmit={(): void => props.removePost(props.id)} />
+                </div>
             </div>
         </div>
     )
