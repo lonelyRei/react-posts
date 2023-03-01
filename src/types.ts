@@ -1,4 +1,6 @@
 // Темы постов
+import React from 'react'
+
 export enum PostsThemes {
     programming = 'Программирование',
     sport = 'Спорт',
@@ -60,3 +62,32 @@ export const PostThemeAny: ICustomDropDownOption = {
     name: 'Все',
     value: 'any',
 }
+
+interface IAuthInterface {
+    isAuth: boolean
+    setIsAuth: React.Dispatch<React.SetStateAction<boolean>>
+    isLoading: boolean
+}
+
+export interface IMainContext {
+    auth: IAuthInterface
+}
+
+export const paginationOptions: ICustomDropDownOption[] = [
+    {
+        name: '5',
+        value: '5',
+    },
+    {
+        name: '10',
+        value: '10',
+    },
+    {
+        name: '25',
+        value: '25',
+    },
+    {
+        name: 'Показать все',
+        value: '-1',
+    },
+]

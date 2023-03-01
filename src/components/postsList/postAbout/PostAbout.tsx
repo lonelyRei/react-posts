@@ -5,8 +5,7 @@ import PostService from '../../../API/PostService'
 import { IPostsListItem } from '../../../types'
 import { Spinner } from '../../UI/spinner/Spinner'
 import './postAbout.css'
-import { CommentsList } from '../commentsList/CommentsList'
-import { CustomButton } from '../../UI/button/CustomButton'
+import { CommentsWrapper } from './CommentsWrapper'
 export const PostAbout: React.FC = () => {
     // Состояние с постом
     const [post, setPost] = useState<IPostsListItem>({ content: '', id: 0, theme: '', title: '' })
@@ -33,8 +32,6 @@ export const PostAbout: React.FC = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
-    // ToDo: Декомпозиция компонента PostAbout
-
     return (
         <div className="post-about">
             {isLoading ? (
@@ -53,24 +50,11 @@ export const PostAbout: React.FC = () => {
                         <div className="post-about__content-text">{post.content}</div>
                     </div>
                     <div className="post-about__comments-area">
-                        {isNeedComments ? (
-                            <>
-                                <CommentsList postId={params.id ? params.id : '0'} />
-                                <CustomButton
-                                    placeholder="Скрыть комментарии"
-                                    onSubmit={() => {
-                                        setIsNeedComments(false)
-                                    }}
-                                />
-                            </>
-                        ) : (
-                            <CustomButton
-                                placeholder="Загрузить комментарии"
-                                onSubmit={() => {
-                                    setIsNeedComments(true)
-                                }}
-                            />
-                        )}
+                        <CommentsWrapper
+                            isNeedComments={isNeedComments}
+                            setIsNeedComments={setIsNeedComments}
+                            id={params.id ? params.id : '0'}
+                        />
                     </div>
                 </div>
             )}
