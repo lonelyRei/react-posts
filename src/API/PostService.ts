@@ -1,7 +1,6 @@
 import axios, { AxiosResponse } from 'axios'
 import { ICommentItem, IPostsListItem } from '../types'
 import { generateRandomTheme } from '../utils/themes'
-import { log } from 'util'
 export default class PostService {
     // URL для получения всех постов
     private static postsUrl: string = 'https://jsonplaceholder.typicode.com/posts'
