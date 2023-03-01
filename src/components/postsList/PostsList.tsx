@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { IPostsListItem, PostThemeAny } from '../../types'
+import { IPostsListItem, paginationOptions, PostThemeAny } from '../../types'
 import { InputArea } from './inputArea/InputArea'
 import './postsList.css'
 import { PostsWrapper } from './postsWrapper/PostsWrapper'
@@ -10,6 +10,7 @@ import PostService from '../../API/PostService'
 import { Spinner } from '../UI/spinner/Spinner'
 import { getPagesArray, getPagesCount } from '../../utils/pages'
 import { Pagination } from '../UI/pagination/Pagination'
+import { CustomDropDown } from '../UI/dropDown/CustomDropDown'
 
 export const PostsList: React.FC = (): JSX.Element => {
     // Все посты, созданные пользователем
@@ -19,7 +20,7 @@ export const PostsList: React.FC = (): JSX.Element => {
     const [totalPages, setTotalPages] = useState<number>(0)
 
     // Состояния лимита постов на страницы и номера страницы
-    const limit: number = 10
+    const [limit, setLimit] = useState<number>(10)
 
     // Текущая страница
     const [page, setPage] = useState<number>(1)
@@ -65,7 +66,7 @@ export const PostsList: React.FC = (): JSX.Element => {
         callback().then()
 
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [page])
+    }, [page, limit])
 
     return (
         <div className="postList">
@@ -88,6 +89,12 @@ export const PostsList: React.FC = (): JSX.Element => {
                         />
                         <PostsWrapper filteredPosts={filteredPostsWithQuery} removePost={removePost} />
                         <Pagination currentPage={page} pagesArray={pagesArray} setPage={setPage} />
+                        <CustomDropDown
+                            value={String(limit)}
+                            onChange={(value: string): void => setLimit(Number(value))}
+                            defaultValue="Количество отображаемых постов"
+                            options={paginationOptions}
+                        />
                     </div>
                 </div>
             )}
