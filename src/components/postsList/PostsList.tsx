@@ -6,7 +6,7 @@ import { PostsWrapper } from './postsWrapper/PostsWrapper'
 import { FilterPosts } from './filterPosts/FilterPosts'
 import { useSortedPostsWithQuery } from '../../hooks/usePosts'
 import { useFetching } from '../../hooks/useFetching'
-import PostService from '../../API/PostService'
+import PostService, { allPostsResponse } from '../../API/PostService'
 import { Spinner } from '../UI/spinner/Spinner'
 import { getPagesArray, getPagesCount } from '../../utils/pages'
 import { Pagination } from '../UI/pagination/Pagination'
@@ -18,6 +18,8 @@ export const PostsList: React.FC = (): JSX.Element => {
 
     // Состояние количества страниц, доступных для отрисовки
     const [totalPages, setTotalPages] = useState<number>(0)
+
+    const [isPostsLoading, setIsPostsLoading] = useState({ isLoading: false, isError: false })
 
     // Состояния лимита постов на страницы и номера страницы
     const [limit, setLimit] = useState<number>(10)
@@ -55,10 +57,19 @@ export const PostsList: React.FC = (): JSX.Element => {
     // Посты, отфильтрованные в соответствии с выбранной темой и поисковым запросом
     const filteredPostsWithQuery = useSortedPostsWithQuery(filterAlgorithm.query, filterAlgorithm.selectedTheme, posts)
 
-    const [callback, isLoading, error] = useFetching(async () => {
-        const [posts, totalCount] = await PostService.getAllPosts(limit, page)
-        setPosts(posts)
-        setTotalPages(getPagesCount(totalCount, limit))
+    const callback = useFetching(async () => {
+        setIsPostsLoading({ ...isPostsLoading, isLoading: true })
+        PostService.getAllPosts(limit, page)
+            .then(
+                (response: allPostsResponse) => {
+                    setPosts(response.correctData)
+                    setTotalPages(getPagesCount(response.totalCount, limit))
+                },
+                () => {
+                    setIsPostsLoading({ ...isPostsLoading, isError: true })
+                }
+            )
+            .finally(() => setIsPostsLoading({ ...isPostsLoading, isLoading: false }))
     })
 
     useEffect((): void => {
@@ -70,9 +81,9 @@ export const PostsList: React.FC = (): JSX.Element => {
 
     return (
         <div className="postList">
-            {isLoading ? (
+            {isPostsLoading.isLoading ? (
                 <Spinner />
-            ) : error ? (
+            ) : isPostsLoading.isError ? (
                 <h1>Не удалось загрузить посты</h1>
             ) : (
                 <div>

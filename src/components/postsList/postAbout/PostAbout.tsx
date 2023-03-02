@@ -10,6 +10,10 @@ export const PostAbout: React.FC = () => {
     // Состояние с постом
     const [post, setPost] = useState<IPostsListItem>({ content: '', id: 0, theme: '', title: '' })
 
+    const [isError, setIsError] = useState<boolean>(false)
+
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+
     // Состояние необходимости добавления комментариев
     const [isNeedComments, setIsNeedComments] = useState<boolean>(false)
 
@@ -17,10 +21,19 @@ export const PostAbout: React.FC = () => {
     const params = useParams()
 
     // Получаем пост по id из параметров
-    const [postsCallback, isLoading, isError] = useFetching(async () => {
+    const postsCallback = useFetching(async () => {
         if (params.id) {
-            const post = await PostService.getPost(params.id)
-            setPost(post)
+            setIsLoading(true)
+            PostService.getPost(params.id)
+                .then(
+                    (response: IPostsListItem) => {
+                        setPost(response)
+                    },
+                    () => {
+                        setIsError(true)
+                    }
+                )
+                .finally(() => setIsLoading(false))
         }
     })
 
